@@ -2,10 +2,10 @@ import { Outlet } from "react-router";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const PageLayout = () => {
+const PageLayout = ({state, dispatch}) => {
     return (
         <>
-            <Navbar />
+            <Navbar state={state} dispatch={dispatch} />
             <Outlet />
             <Footer/>
         </>
