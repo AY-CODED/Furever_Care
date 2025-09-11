@@ -21,9 +21,12 @@ const SignUp = ({ dispatch }) => {
 
         localStorage.setItem("userType", userType);
         localStorage.setItem("userName", userName);
-        localStorage.setItem('password', password);
+        localStorage.setItem("password", password);
 
         dispatch({ type: "auth/login", value: { userName, userType } });
+
+        // 🔥 trigger storage event so Navbar updates immediately
+        window.dispatchEvent(new Event("storage"));
 
         // Redirect based on user type
         if (userType === "pet-owner") {

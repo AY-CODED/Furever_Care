@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { User, Lock } from "lucide-react";
 import bgImage from "../assets/pets-bg.jpg"; // replace with your image
 
-const Login = ({state, dispatch}) => {
+const Login = ({ state, dispatch }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -17,12 +17,18 @@ const Login = ({state, dispatch}) => {
         const storedUser = localStorage.getItem("userName");
         const storedPass = localStorage.getItem("password");
         const storedRole = localStorage.getItem("userType");
-        
 
         if (username === storedUser && password === storedPass) {
             alert(
                 `Welcome back ${storedUser}! You are logged in as ${storedRole}.`
             );
+
+            // 🔥 dispatch login state
+            dispatch({ type: "auth/login", value: { userName: storedUser, userType: storedRole } });
+
+            // 🔥 trigger storage event so Navbar updates immediately
+            window.dispatchEvent(new Event("storage"));
+
             navigate(`/${storedRole}`);
         } else {
             alert("Invalid username or password ❌");
