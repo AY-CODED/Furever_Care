@@ -1,5 +1,6 @@
 // src/pages/PetOwnerLanding.jsx
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import petDog from "../assets/dog.jpg";
 import petCat from "../assets/pets-bg.jpg";
@@ -314,46 +315,58 @@ const PetOwnerLanding = () => {
                 {/* Grid */}
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
                     {/* Pet Profile */}
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                    <Link
+                        to="/petcare"
+                        className="hover:text-pink-500 transition-colors"
                     >
-                        <PawPrint className="w-12 h-12 text-pink-500 mb-4" />
-                        <h3 className="font-semibold text-lg mb-2">
-                            Pet Profile
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                            Manage and update your pet’s profile.
-                        </p>
-                    </motion.div>
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                        >
+                            <PawPrint className="w-12 h-12 text-pink-500 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Pet Profile
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Manage and update your pet’s profile.
+                            </p>
+                        </motion.div>
+                    </Link>
 
                     {/* Feeding Guide */}
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
-                    >
-                        <UtensilsCrossed className="w-12 h-12 text-purple-500 mb-4" />
-                        <h3 className="font-semibold text-lg mb-2">
-                            Feeding Guide
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                            Nutrition and feeding schedules.
-                        </p>
-                    </motion.div>
+                    <Link to="/feeding-guide">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center cursor-pointer"
+                        >
+                            <UtensilsCrossed className="w-12 h-12 text-purple-500 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Feeding Guide
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Nutrition and feeding schedules.
+                            </p>
+                        </motion.div>
+                    </Link>
 
                     {/* Health Tips */}
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                    <Link
+                        to="/health-tips"
+                        className="flex flex-col items-center"
                     >
-                        <HeartPulse className="w-12 h-12 text-red-500 mb-4" />
-                        <h3 className="font-semibold text-lg mb-2">
-                            Health Tips
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                            Keep your pets healthy and active.
-                        </p>
-                    </motion.div>
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                        >
+                            <HeartPulse className="w-12 h-12 text-red-500 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Health Tips
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Keep your pets healthy and active.
+                            </p>
+                        </motion.div>
+                    </Link>
 
                     {/* Grooming Videos */}
                     <motion.div

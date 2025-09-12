@@ -7,6 +7,10 @@ import PetOwner from "./pages/PetOwner";
 import Veterinarian from "./pages/Veterinarian";
 import AnimalShelter from "./pages/AnimalShelter";
 import { useEffect, useReducer } from "react";
+import PetCare from "./pages/PetCare";
+import PetProfile from "./pages/PetProfile";
+import FeedingGuide from "./pages/FeedingGuide";
+import HealthTips from "./pages/HealthTips";
 
 const reducerFunction = function (state, action) {
     switch (action.type) {
@@ -84,6 +88,33 @@ const App = () => {
                                     state={state}
                                     dispatch={dispatch}
                                 />
+                            }
+                        />
+                        <Route
+                            path="/petcare"
+                            element={
+                                <PetCare state={state} dispatch={dispatch} />
+                            }
+                        />
+                        <Route
+                            path="/pet-profile"
+                            element={
+                                <PetProfile state={state} dispatch={dispatch} />
+                            }
+                        />
+                        <Route
+                            path="/feeding-guide"
+                            element={
+                                <FeedingGuide
+                                    state={state}
+                                    dispatch={dispatch}
+                                />
+                            }
+                        />
+                        <Route
+                            path="health-tips"
+                            element={
+                                <HealthTips state={state} dispatch={dispatch} />
                             }
                         />
                     </Route>
