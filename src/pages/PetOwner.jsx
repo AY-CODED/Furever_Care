@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import petDog from "../assets/dog.jpg";
 import petCat from "../assets/pets-bg.jpg";
 import teamData from "../data/team.json";
+import TopTicker from "../components/TopTicker"
 
 import {
     Heart,
@@ -67,6 +68,7 @@ const PetOwnerLanding = () => {
     return (
         <div className="relative min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex flex-col items-center justify-start px-4 sm:px-6 lg:px-12 py-12">
             {/* Floating Side Menu Button */}
+            <TopTicker/>
             <div className="fixed top-20 right-6 z-50">
                 <button
                     onClick={() => setMenuOpen(!menuOpen)}
