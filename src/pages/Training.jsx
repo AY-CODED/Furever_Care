@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Training = () => {
     const navigate = useNavigate();
+    
 
     const tips = [
         {

@@ -10,7 +10,7 @@ const SignUp = ({ dispatch }) => {
     const [password, setPassword] = useState("");
     const [userType, setUserType] = useState("");
     const navigate = useNavigate();
-
+        
     const handleSubmit = (e) => {
         e.preventDefault();
 

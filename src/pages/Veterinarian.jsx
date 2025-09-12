@@ -1,200 +1,146 @@
 import React, { useState } from "react";
 
-const VeterinarianPage = () => {
-    const [vet, setVet] = useState({
-        name: "",
-        specialization: "",
-        contact: "",
-        image: "",
-    });
-    const [submitted, setSubmitted] = useState(false);
+const PetProfile = () => {
+  const ownerName = localStorage.getItem("userName") || "Unknown Owner";
 
-    // handle text inputs (name, specialization, contact, image URL)
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setVet((prev) => ({ ...prev, [name]: value }));
-    };
+  const [pet, setPet] = useState({
+    name: "Buddy",
+    breed: "Golden Retriever",
+    owner: ownerName,
+    description: "Buddy is a friendly and energetic pet who loves walks and cuddles.",
+    image: "",
+    medicalHistory: ["🐶 Vaccinated for rabies", "🐶 Treated for ear infection"],
+    feedingSchedule: ["8:00 AM - Dry food", "1:00 PM - Wet food", "6:00 PM - Dry food"],
+    groomingTips: ["Brush twice a week", "Bath once a month", "Check ears regularly"],
+  });
 
-    // handle file uploads
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setVet((prev) => ({ ...prev, image: reader.result })); // base64 string
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+  const [editingField, setEditingField] = useState(null);
+  const [tempValue, setTempValue] = useState("");
+  const [tempImage, setTempImage] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSubmitted(true);
-    };
+  const handleEdit = (field) => {
+    setEditingField(field);
+    if (field === "image") setTempImage(pet.image);
+    else setTempValue(pet[field].join ? pet[field].join("\n") : pet[field]);
+  };
 
-    if (!submitted) {
-        // --- STEP 1: Collect Vet Info ---
-        return (
-            <div className="flex justify-center items-start min-h-screen bg-gradient-to-br from-purple-900 to-black text-white overflow-auto py-26">
-                <form
-                    onSubmit={handleSubmit}
-                    className="bg-black/40 text-gray-200 p-8 rounded-2xl shadow-lg w-96 space-y-4"
-                >
-                    <h2 className="text-2xl font-bold text-center bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
-                        Veterinarian Registration
-                    </h2>
+  const handleSave = (field) => {
+    if (field === "image") setPet({ ...pet, image: tempImage });
+    else if (field === "basic")
+      setPet({
+        ...pet,
+        name: tempValue.name || pet.name,
+        breed: tempValue.breed || pet.breed,
+        owner: tempValue.owner || pet.owner,
+        description: `${tempValue.name || pet.name} is a friendly and energetic pet who loves walks and cuddles.`,
+      });
+    else setPet({ ...pet, [field]: tempValue.split("\n") });
+    setEditingField(null);
+  };
 
-                    {/* Name */}
-                    <div>
-                        <label className="block mb-1 placeholder-gray-300">
-                            Name:
-                        </label>
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Dr. Jane"
-                            value={vet.name}
-                            onChange={handleChange}
-                            required
-                            pattern="^[A-Za-z\\s]+$"
-                            title="Name should only contain letters and spaces"
-                            className="w-full px-3 py-2 border rounded-lg"
-                        />
-                    </div>
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => setTempImage(reader.result);
+    reader.readAsDataURL(file);
+  };
 
-                    {/* Specialization */}
-                    <div>
-                        <label className="block mb-1">Specialization:</label>
-                        <input
-                            type="text"
-                            name="specialization"
-                            placeholder="Treatment & Surgery"
-                            value={vet.specialization}
-                            onChange={handleChange}
-                            required
-                            pattern="^[A-Za-z\\s]+$"
-                            title="Specialization should only contain letters and spaces"
-                            className="w-full px-3 py-2 border rounded-lg"
-                        />
-                    </div>
-
-                    {/* Contact Info */}
-                    <div>
-                        <label className="block mb-1">
-                            Contact Info (Email or Phone):
-                        </label>
-                        <input
-                            type="text"
-                            name="contact"
-                            placeholder="+234"
-                            value={vet.contact}
-                            onChange={handleChange}
-                            required
-                            pattern="^(\\+?\\d{10,15}|[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})$"
-                            title="Enter a valid phone number or email"
-                            className="w-full px-3 py-2 border rounded-lg"
-                        />
-                    </div>
-
-                    {/* Image Upload */}
-                    <div>
-                        <label className="block mb-1">Upload Image:</label>
-                        <input
-                            type="file"
-                            required
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            className="w-full px-3 py-2 border rounded-lg"
-                        />
-                    </div>
-
-                    {/* Image URL (optional alternative) */}
-                    <div>
-                        <label className="block mb-1">
-                            Or Enter Image URL:
-                        </label>
-                        <input
-                            type="url"
-                            name="image"
-                            value={
-                                vet.image.startsWith("http") ? vet.image : ""
-                            }
-                            onChange={handleChange}
-                            placeholder="https://example.com/vet.jpg"
-                            className="w-full px-3 py-2 border rounded-lg"
-                        />
-                    </div>
-
-                    {/* Submit */}
-                    <button
-                        type="submit"
-                        className="w-full bg-gradient-to-r from-pink-500 to-purple-600  py-2 rounded-lg transition"
-                    >
-                        Submit
-                    </button>
-                </form>
+  return (
+    <div className="min-h-screen bg-gray-100 p-12">
+      {/* Header */}
+      <div className="bg-purple-700 text-white p-6 rounded-xl shadow-md mb-8 text-center">
+        {editingField === "basic" ? (
+          <div className="space-y-2">
+            <input
+              type="text"
+              placeholder="Pet Name"
+              defaultValue={pet.name}
+              className="p-2 rounded w-full text-black"
+              onChange={(e) => setTempValue({ ...tempValue, name: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Breed"
+              defaultValue={pet.breed}
+              className="p-2 rounded w-full text-black"
+              onChange={(e) => setTempValue({ ...tempValue, breed: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Owner"
+              defaultValue={pet.owner}
+              className="p-2 rounded w-full text-black"
+              onChange={(e) => setTempValue({ ...tempValue, owner: e.target.value })}
+            />
+            <div className="flex gap-2 justify-center mt-2">
+              <button onClick={() => handleSave("basic")} className="bg-green-500 px-4 py-2 rounded text-white">Save</button>
+              <button onClick={() => setEditingField(null)} className="bg-gray-400 px-4 py-2 rounded text-white">Cancel</button>
             </div>
-        );
-    }
+          </div>
+        ) : (
+          <>
+            <h1 className="text-3xl font-bold">{pet.name}</h1>
+            <p className="mt-2">{pet.breed} | Owner: {pet.owner}</p>
+            <button onClick={() => handleEdit("basic")} className="mt-2 px-3 py-1 bg-white text-purple-700 rounded">Edit Info</button>
+          </>
+        )}
+      </div>
 
-    // --- STEP 2: Vet Profile Page ---
-    return (
-        <div className="min-h-screen bg-gray-100 p-24">
-            <header className="bg-purple-700 text-white p-4 rounded-lg shadow-md mb-6">
-                <h1 className="text-3xl font-bold">Welcome, Dr. {vet.name}</h1>
-                <p>{vet.specialization}</p>
-            </header>
-
-            <div className="grid md:grid-cols-2 gap-6">
-                {/* Vet Profile Card */}
-                <div className="bg-white p-6 rounded-lg shadow-md text-center">
-                    <img
-                        src={vet.image || "https://via.placeholder.com/150"}
-                        alt="Vet"
-                        className="w-40 h-40 rounded-full mx-auto mb-4 object-cover"
-                    />
-                    <h2 className="text-2xl font-bold">{vet.name}</h2>
-                    <p className="text-gray-600">{vet.specialization}</p>
-                    <p className="mt-2">{vet.contact}</p>
-                </div>
-
-                {/* Appointment Slots */}
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-xl font-bold mb-4">Appointments</h2>
-                    <ul className="space-y-2">
-                        <li className="p-2 bg-green-100 rounded">
-                            10:00 AM - Available
-                        </li>
-                        <li className="p-2 bg-red-100 rounded">
-                            11:00 AM - Booked
-                        </li>
-                        <li className="p-2 bg-green-100 rounded">
-                            12:00 PM - Available
-                        </li>
-                        <li className="p-2 bg-red-100 rounded">
-                            1:00 PM - Booked
-                        </li>
-                    </ul>
-                </div>
+      {/* Pet Card */}
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Image & Description */}
+        <div className="bg-white p-6 rounded-xl shadow-md text-center">
+          <img
+            src={pet.image || "https://via.placeholder.com/150"}
+            alt={pet.name}
+            className="w-48 h-48 rounded-full mx-auto mb-4 object-cover"
+          />
+          {editingField === "image" ? (
+            <div className="space-y-2">
+              <input type="text" placeholder="Image URL" value={tempImage} onChange={(e) => setTempImage(e.target.value)} className="w-full p-2 border rounded" />
+              <input type="file" accept="image/*" onChange={handleImageUpload} />
+              <div className="flex gap-2 justify-center mt-2">
+                <button onClick={() => handleSave("image")} className="bg-green-500 px-4 py-2 rounded text-white">Save</button>
+                <button onClick={() => setEditingField(null)} className="bg-gray-400 px-4 py-2 rounded text-white">Cancel</button>
+              </div>
             </div>
-
-            {/* Case Studies */}
-            <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-                <h2 className="text-xl font-bold mb-4">Sample Case Studies</h2>
-                <ul className="list-disc pl-6 space-y-2">
-                    <li>
-                        🐶 Max (Golden Retriever) – Treated for ear infection
-                    </li>
-                    <li>
-                        🐱 Bella (Persian Cat) – Dental cleaning and checkup
-                    </li>
-                    <li>
-                        🐇 Snowy (Rabbit) – Vaccinated and treated for mites
-                    </li>
-                </ul>
-            </div>
+          ) : (
+            <>
+              <p className="text-gray-700 mt-2">{pet.description}</p>
+              <button onClick={() => handleEdit("image")} className="mt-2 px-3 py-1 bg-white text-purple-700 rounded">Change Image</button>
+            </>
+          )}
         </div>
-    );
+
+        {/* Editable Info Sections */}
+        <div className="space-y-6">
+          {["medicalHistory", "feedingSchedule", "groomingTips"].map((field) => (
+            <div key={field} className="bg-white p-6 rounded-xl shadow-md">
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-xl font-bold">{field.replace(/([A-Z])/g, " $1")}</h2>
+                {editingField !== field && <button onClick={() => handleEdit(field)} className="text-purple-700 font-semibold">Edit</button>}
+              </div>
+
+              {editingField === field ? (
+                <div className="space-y-2">
+                  <textarea value={tempValue} onChange={(e) => setTempValue(e.target.value)} className="w-full p-2 border rounded text-black" rows={4} />
+                  <div className="flex gap-2">
+                    <button onClick={() => handleSave(field)} className="bg-green-500 px-4 py-2 rounded text-white">Save</button>
+                    <button onClick={() => setEditingField(null)} className="bg-gray-400 px-4 py-2 rounded text-white">Cancel</button>
+                  </div>
+                </div>
+              ) : (
+                <ul className="list-disc pl-6 space-y-1 text-gray-700">
+                  {pet[field].map((item, idx) => <li key={idx}>{item}</li>)}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default VeterinarianPage;
+export default PetProfile;

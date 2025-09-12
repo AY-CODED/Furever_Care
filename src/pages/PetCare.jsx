@@ -17,7 +17,7 @@ const sections = [
     },
     {
         label: "Grooming Videos",
-        path: "/grooming-videos",
+        path: "/grooming",
         icon: <FaBath size={36} className="text-blue-500" />,
     },
     {
@@ -27,14 +27,13 @@ const sections = [
     },
     {
         label: "Training Tips",
-        path: "/training-tips",
+        path: "/training",
         icon: <FaDog size={36} className="text-green-500" />,
     },
 ];
 
 const PetCare = () => {
     const navigate = useNavigate(); // hook for back navigation
-
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col items-center px-6 md:px-20 py-16 space-y-16">
             {/* Back Button */}

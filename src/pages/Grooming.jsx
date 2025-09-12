@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 
 const Grooming = () => {
     const navigate = useNavigate();
+        
 
     const videos = [
         {

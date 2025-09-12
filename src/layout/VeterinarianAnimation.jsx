@@ -5,6 +5,7 @@ import cat from "./../assets/cat.png"
 
 const VeterinarianAnimation = () => {
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  
 
   // 🎯 Mouse movement (desktop)
   const handleMouseMove = (e) => {
