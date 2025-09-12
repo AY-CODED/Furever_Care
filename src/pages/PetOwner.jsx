@@ -350,13 +350,13 @@ const PetOwnerLanding = () => {
                     </Link>
 
                     {/* Health Tips */}
-                    <Link
-                        to="/health-tips"
-                        className="flex flex-col items-center"
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
                     >
-                        <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                        <Link
+                            to="/health-tips"
+                            className="flex flex-col items-center"
                         >
                             <HeartPulse className="w-12 h-12 text-red-500 mb-4" />
                             <h3 className="font-semibold text-lg mb-2">
@@ -365,36 +365,41 @@ const PetOwnerLanding = () => {
                             <p className="text-gray-600 text-sm">
                                 Keep your pets healthy and active.
                             </p>
+                        </Link>
+                    </motion.div>
+
+                    {/* Grooming Videos */}
+                    <Link to="/grooming">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                        >
+                            <Scissors className="w-12 h-12 text-blue-500 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Grooming Videos
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Step-by-step guides to keep pets clean and
+                                stylish.
+                            </p>
                         </motion.div>
                     </Link>
 
-                    {/* Grooming Videos */}
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
-                    >
-                        <Scissors className="w-12 h-12 text-blue-500 mb-4" />
-                        <h3 className="font-semibold text-lg mb-2">
-                            Grooming Videos
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                            Step-by-step guides to keep pets clean and stylish.
-                        </p>
-                    </motion.div>
-
                     {/* Training Tips */}
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
-                    >
-                        <Dumbbell className="w-12 h-12 text-green-500 mb-4" />
-                        <h3 className="font-semibold text-lg mb-2">
-                            Training Tips
-                        </h3>
-                        <p className="text-gray-600 text-sm">
-                            Train your pets with effective techniques.
-                        </p>
-                    </motion.div>
+                    <Link to="/training">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                        >
+                            <Dumbbell className="w-12 h-12 text-green-500 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Training Tips
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Train your pets with effective techniques.
+                            </p>
+                        </motion.div>
+                    </Link>
                 </div>
             </section>
 

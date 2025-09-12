@@ -11,6 +11,8 @@ import PetCare from "./pages/PetCare";
 import PetProfile from "./pages/PetProfile";
 import FeedingGuide from "./pages/FeedingGuide";
 import HealthTips from "./pages/HealthTips";
+import Grooming from "./pages/Grooming";
+import Training from "./pages/Training";
 
 const reducerFunction = function (state, action) {
     switch (action.type) {
@@ -112,9 +114,21 @@ const App = () => {
                             }
                         />
                         <Route
-                            path="health-tips"
+                            path="/health-tips"
                             element={
                                 <HealthTips state={state} dispatch={dispatch} />
+                            }
+                        />
+                        <Route
+                            path="grooming"
+                            element={
+                                <Grooming state={state} dispatch={dispatch} />
+                            }
+                        />
+                        <Route
+                            path="training"
+                            element={
+                                <Training state={state} dispatch={dispatch} />
                             }
                         />
                     </Route>
