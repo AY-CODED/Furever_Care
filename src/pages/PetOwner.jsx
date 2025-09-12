@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import petDog from "../assets/dog.jpg";
 import petCat from "../assets/pets-bg.jpg";
 import teamData from "../data/team.json";
-import TopTicker from "../components/TopTicker"
+import TopTicker from "../components/TopTicker";
 
 import {
     Heart,
@@ -27,7 +27,7 @@ import {
     MapPin,
 } from "lucide-react";
 
-const PetOwnerLanding = () => {
+const PetOwner = () => {
     const userName = localStorage.getItem("userName") || "Pet Lover";
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -68,7 +68,7 @@ const PetOwnerLanding = () => {
     return (
         <div className="relative min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex flex-col items-center justify-start px-4 sm:px-6 lg:px-12 py-12">
             {/* Floating Side Menu Button */}
-            <TopTicker/>
+            <TopTicker />
             <div className="fixed top-20 right-6 z-50">
                 <button
                     onClick={() => setMenuOpen(!menuOpen)}
@@ -417,73 +417,50 @@ const PetOwnerLanding = () => {
                             name: "Dog Food",
                             price: "₦5000",
                             desc: "Nutritious dry food.",
-                            img: petDog,
+                            img: "https://pictures-nigeria.jijistatic.net/139568211_MzAwLTQwMC1lMTZlOTg3MDMw.webp",
                         },
-                        {
-                            name: "Cat Toy",
-                            price: "₦2000",
-                            desc: "Fun toy for cats.",
-                            img: petCat,
-                        },
-                        {
-                            name: "Pet Bed",
-                            price: "₦7000",
-                            desc: "Soft and cozy bed.",
-                            img: petDog,
-                        },
-                        {
-                            name: "Cat Food",
-                            price: "₦4500",
-                            desc: "Wholesome cat meal.",
-                            img: petCat,
-                        },
-                        {
-                            name: "Dog Collar",
-                            price: "₦2500",
-                            desc: "Adjustable stylish collar.",
-                            img: petDog,
-                        },
-                        {
-                            name: "Cat Scratcher",
-                            price: "₦6000",
-                            desc: "Durable scratching post.",
-                            img: petCat,
-                        },
+                        // {
+                        //     name: "Dog Collar",
+                        //     price: "₦2500",
+                        //     desc: "Adjustable stylish collar.",
+                        //     img: "https://www.google.com/aclk?sa=L&ai=DChsSEwim0telldOPAxXYolAGHeCKK0MYACICCAEQERoCZGc&co=1&ase=2&gclid=CjwKCAjwiY_GBhBEEiwAFaghviJ4oZK32o12NZPEu9e71IuEykULeDNNvpyZAY8-_X4dDZtEpyaLJBoCbZ4QAvD_BwE&cce=2&category=acrcp_v1_32&sig=AOD64_1MtzdsHZKhoOkAxGohDbZayqRWdQ&ctype=5&q=&nis=4&ved=2ahUKEwi768-lldOPAxUoU0EAHet8GE0Q9aACKAB6BAgIEBA&adurl=",
+                        // },
                         {
                             name: "Dog Shampoo",
                             price: "₦3500",
                             desc: "Gentle grooming shampoo.",
-                            img: petDog,
+                            img: "https://pictures-nigeria.jijistatic.net/174724793_MzAwLTQwMC02MGYxZmVjODdl.webp",
+                        },
+
+                        {
+                            name: "Rabbit Hay",
+                            price: "₦3500",
+                            desc: "Healthy hay for rabbits.",
+                            img: "https://pictures-nigeria.jijistatic.net/133967211_MzAwLTQwMC05MzFjYWZkMDc5.webp",
                         },
                         {
-                            name: "Cat Litter",
-                            price: "₦4000",
-                            desc: "Clumping litter with odor control.",
-                            img: petCat,
+                            name: "Rabbit Hutch",
+                            price: "₦18000",
+                            desc: "Cozy wooden home for rabbits.",
+                            img: "https://pictures-nigeria.jijistatic.net/167136987_MzAwLTIyNS1iN2EyMTMyN2Q0.webp",
+                        },
+                        // {
+                        //     name: "PawHut Dog Playhen",
+                        //     price: "₦18000",
+                        //     desc: "Cozy wooden home for rabbits.",
+                        //     img: "https://www.google.com/aclk?sa=L&ai=DChsSEwjz1civldOPAxVymFAGHbHvI7YYACICCAEQCxoCZGc&co=1&ase=2&gclid=CjwKCAjwiY_GBhBEEiwAFaghviWqev9L_MAbZ5IjGz_LlrFNa2_h1Ysf4KL5j2R5wv3CNz_-rjzUIxoCpMgQAvD_BwE&cce=2&category=acrcp_v1_32&sig=AOD64_1EAxcaj5EybqFw0gmUaSRxRgVfgA&ctype=5&q=&nis=4&ved=2ahUKEwjwkcGvldOPAxXWUUEAHcjCLdQQ9aACKAB6BAgJEBg&adurl=",
+                        // },
+                        {
+                            name: "Hamster Wheel",
+                            price: "₦5000",
+                            desc: "Fun exercise wheel.",
+                            img: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ4Kdwm4LwUgbALZpRFTAPaYHwoCJ0E7IBR5CFz3dGTNJeOk79sRuZZbSYidsKjNdC8yLu0FLTsOkpw8pk8eBcItr2BoIUYEx6HQKe3mVArBi8Bao_10QBzw5wuTg&usqp=CAc",
                         },
                         {
-                            name: "Dog Leash",
-                            price: "₦3000",
-                            desc: "Strong and comfortable leash.",
-                            img: petDog,
-                        },
-                        {
-                            name: "Pet Vitamins",
-                            price: "₦5500",
-                            desc: "Boost immunity and health.",
-                            img: petCat,
-                        },
-                        {
-                            name: "Cat Bed",
-                            price: "₦6500",
-                            desc: "Comfy resting space for cats.",
-                            img: petCat,
-                        },
-                        {
-                            name: "Cat Bed",
-                            price: "₦6500",
-                            desc: "Comfy resting space for cats.",
-                            img: petCat,
+                            name: "Hamster Cage",
+                            price: "₦12000",
+                            desc: "Spacious cage for hamsters.",
+                            img: "https://m.media-amazon.com/images/I/71XFheLh-8L._AC_CR0%2C0%2C0%2C0_SX704_SY660_.jpg",
                         },
                     ].map((p, i) => (
                         <div
@@ -717,4 +694,4 @@ const PetOwnerLanding = () => {
     );
 };
 
-export default PetOwnerLanding;
+export default PetOwner;

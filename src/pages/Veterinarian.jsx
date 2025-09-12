@@ -1,146 +1,304 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const PetProfile = () => {
-  const ownerName = localStorage.getItem("userName") || "Unknown Owner";
-
-  const [pet, setPet] = useState({
-    name: "Buddy",
-    breed: "Golden Retriever",
-    owner: ownerName,
-    description: "Buddy is a friendly and energetic pet who loves walks and cuddles.",
-    image: "",
-    medicalHistory: ["🐶 Vaccinated for rabies", "🐶 Treated for ear infection"],
-    feedingSchedule: ["8:00 AM - Dry food", "1:00 PM - Wet food", "6:00 PM - Dry food"],
-    groomingTips: ["Brush twice a week", "Bath once a month", "Check ears regularly"],
+const Veterinarian = () => {
+  // Vet profile (could be fetched from backend; here using localStorage)
+  const [vet, setVet] = useState(() => {
+    return JSON.parse(localStorage.getItem("vet")) || {
+      name: "Dr. Jane Doe",
+      email: "vet@example.com",
+      profileImage: "",
+    };
   });
 
-  const [editingField, setEditingField] = useState(null);
-  const [tempValue, setTempValue] = useState("");
-  const [tempImage, setTempImage] = useState("");
+  const [editingVet, setEditingVet] = useState(false);
+  const [tempVet, setTempVet] = useState(vet);
 
-  const handleEdit = (field) => {
-    setEditingField(field);
-    if (field === "image") setTempImage(pet.image);
-    else setTempValue(pet[field].join ? pet[field].join("\n") : pet[field]);
+  // Time slots (editable)
+  const [timeSlots, setTimeSlots] = useState([
+    "Mon 10:00 - 12:00",
+    "Tue 14:00 - 16:00",
+    "Fri 09:00 - 11:00",
+  ]);
+  const [editingSlot, setEditingSlot] = useState(false);
+  const [tempSlots, setTempSlots] = useState(timeSlots.join("\n"));
+
+  // Case studies / pets
+  const ownerName = localStorage.getItem("userName") || "Unknown Owner";
+  const [caseStudies, setCaseStudies] = useState([
+    {
+      name: "Buddy",
+      breed: "Golden Retriever",
+      owner: ownerName,
+      description: "Friendly and energetic, loves walks.",
+      image: "",
+      medicalHistory: ["Vaccinated for rabies", "Treated for ear infection"],
+      feedingSchedule: ["8:00 AM - Dry food", "1:00 PM - Wet food"],
+      groomingTips: ["Brush twice a week"],
+    },
+  ]);
+
+  const [editingCase, setEditingCase] = useState(null);
+  const [tempCase, setTempCase] = useState({});
+
+  // Vet edit handlers
+  const saveVetProfile = () => {
+    setVet(tempVet);
+    localStorage.setItem("vet", JSON.stringify(tempVet));
+    setEditingVet(false);
   };
 
-  const handleSave = (field) => {
-    if (field === "image") setPet({ ...pet, image: tempImage });
-    else if (field === "basic")
-      setPet({
-        ...pet,
-        name: tempValue.name || pet.name,
-        breed: tempValue.breed || pet.breed,
-        owner: tempValue.owner || pet.owner,
-        description: `${tempValue.name || pet.name} is a friendly and energetic pet who loves walks and cuddles.`,
-      });
-    else setPet({ ...pet, [field]: tempValue.split("\n") });
-    setEditingField(null);
+  // Time slot handlers
+  const saveTimeSlots = () => {
+    setTimeSlots(tempSlots.split("\n").filter((s) => s.trim() !== ""));
+    setEditingSlot(false);
   };
 
-  const handleImageUpload = (e) => {
+  // Case study handlers
+  const handleCaseEdit = (index) => {
+    setEditingCase(index);
+    setTempCase({ ...caseStudies[index] });
+  };
+
+  const saveCaseStudy = (index) => {
+    const updated = [...caseStudies];
+    updated[index] = tempCase;
+    setCaseStudies(updated);
+    setEditingCase(null);
+  };
+
+  const handleCaseImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onloadend = () => setTempImage(reader.result);
+    reader.onloadend = () => setTempCase({ ...tempCase, image: reader.result });
+    reader.readAsDataURL(file);
+  };
+
+  const handleVetImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => setVet({ ...vet, profileImage: reader.result });
     reader.readAsDataURL(file);
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-12">
-      {/* Header */}
-      <div className="bg-purple-700 text-white p-6 rounded-xl shadow-md mb-8 text-center">
-        {editingField === "basic" ? (
-          <div className="space-y-2">
-            <input
-              type="text"
-              placeholder="Pet Name"
-              defaultValue={pet.name}
-              className="p-2 rounded w-full text-black"
-              onChange={(e) => setTempValue({ ...tempValue, name: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Breed"
-              defaultValue={pet.breed}
-              className="p-2 rounded w-full text-black"
-              onChange={(e) => setTempValue({ ...tempValue, breed: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Owner"
-              defaultValue={pet.owner}
-              className="p-2 rounded w-full text-black"
-              onChange={(e) => setTempValue({ ...tempValue, owner: e.target.value })}
-            />
-            <div className="flex gap-2 justify-center mt-2">
-              <button onClick={() => handleSave("basic")} className="bg-green-500 px-4 py-2 rounded text-white">Save</button>
-              <button onClick={() => setEditingField(null)} className="bg-gray-400 px-4 py-2 rounded text-white">Cancel</button>
-            </div>
-          </div>
-        ) : (
-          <>
-            <h1 className="text-3xl font-bold">{pet.name}</h1>
-            <p className="mt-2">{pet.breed} | Owner: {pet.owner}</p>
-            <button onClick={() => handleEdit("basic")} className="mt-2 px-3 py-1 bg-white text-purple-700 rounded">Edit Info</button>
-          </>
-        )}
-      </div>
-
-      {/* Pet Card */}
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Image & Description */}
-        <div className="bg-white p-6 rounded-xl shadow-md text-center">
-          <img
-            src={pet.image || "https://via.placeholder.com/150"}
-            alt={pet.name}
-            className="w-48 h-48 rounded-full mx-auto mb-4 object-cover"
-          />
-          {editingField === "image" ? (
-            <div className="space-y-2">
-              <input type="text" placeholder="Image URL" value={tempImage} onChange={(e) => setTempImage(e.target.value)} className="w-full p-2 border rounded" />
-              <input type="file" accept="image/*" onChange={handleImageUpload} />
-              <div className="flex gap-2 justify-center mt-2">
-                <button onClick={() => handleSave("image")} className="bg-green-500 px-4 py-2 rounded text-white">Save</button>
-                <button onClick={() => setEditingField(null)} className="bg-gray-400 px-4 py-2 rounded text-white">Cancel</button>
+    <div className="min-h-screen bg-gray-100 p-6 md:p-12 space-y-8">
+      {/* Vet Profile */}
+      <div className="bg-purple-700 text-white p-6 rounded-xl shadow-md flex flex-col md:flex-row items-center gap-6 mt-10">
+        <div className="text-center md:text-left">
+          {editingVet ? (
+            <div className="space-y-2 text-black">
+              <input
+                type="text"
+                className="p-2 rounded w-full"
+                value={tempVet.name}
+                onChange={(e) => setTempVet({ ...tempVet, name: e.target.value })}
+                placeholder="Name"
+              />
+              <input
+                type="email"
+                className="p-2 rounded w-full"
+                value={tempVet.email}
+                onChange={(e) => setTempVet({ ...tempVet, email: e.target.value })}
+                placeholder="Email"
+              />
+              <div className="flex gap-2 mt-2 justify-center md:justify-start">
+                <button
+                  onClick={saveVetProfile}
+                  className="bg-green-500 px-4 py-2 rounded text-white"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setEditingVet(false)}
+                  className="bg-gray-400 px-4 py-2 rounded text-white"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           ) : (
             <>
-              <p className="text-gray-700 mt-2">{pet.description}</p>
-              <button onClick={() => handleEdit("image")} className="mt-2 px-3 py-1 bg-white text-purple-700 rounded">Change Image</button>
+              <h2 className="text-2xl font-bold">{vet.name}</h2>
+              <p>{vet.email}</p>
+              <button
+                onClick={() => setEditingVet(true)}
+                className="mt-2 px-3 py-1 bg-white text-purple-700 rounded"
+              >
+                Edit Profile
+              </button>
             </>
           )}
         </div>
 
-        {/* Editable Info Sections */}
-        <div className="space-y-6">
-          {["medicalHistory", "feedingSchedule", "groomingTips"].map((field) => (
-            <div key={field} className="bg-white p-6 rounded-xl shadow-md">
-              <div className="flex justify-between items-center mb-2">
-                <h2 className="text-xl font-bold">{field.replace(/([A-Z])/g, " $1")}</h2>
-                {editingField !== field && <button onClick={() => handleEdit(field)} className="text-purple-700 font-semibold">Edit</button>}
-              </div>
+        {/* Vet Profile Image with Upload */}
+        <div className="w-32 h-32 rounded-full overflow-hidden bg-white shadow-md flex items-center justify-center cursor-pointer relative">
+          {vet.profileImage ? (
+            <img
+              src={vet.profileImage}
+              alt="Vet"
+              className="w-full h-full object-cover"
+              onClick={() => document.getElementById("vetImageInput").click()}
+            />
+          ) : (
+            <div
+              className="text-gray-400 text-2xl text-center flex items-center justify-center w-full h-full"
+              onClick={() => document.getElementById("vetImageInput").click()}
+            >
+              Select a Photo
+            </div>
+          )}
+          <input
+            type="file"
+            id="vetImageInput"
+            accept="image/*"
+            className="hidden"
+            onChange={handleVetImageUpload}
+          />
+        </div>
+      </div>
 
-              {editingField === field ? (
-                <div className="space-y-2">
-                  <textarea value={tempValue} onChange={(e) => setTempValue(e.target.value)} className="w-full p-2 border rounded text-black" rows={4} />
-                  <div className="flex gap-2">
-                    <button onClick={() => handleSave(field)} className="bg-green-500 px-4 py-2 rounded text-white">Save</button>
-                    <button onClick={() => setEditingField(null)} className="bg-gray-400 px-4 py-2 rounded text-white">Cancel</button>
-                  </div>
-                </div>
-              ) : (
-                <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                  {pet[field].map((item, idx) => <li key={idx}>{item}</li>)}
-                </ul>
+      {/* Time Slots */}
+      <div className="bg-white p-6 rounded-xl shadow-md">
+        <div className="flex justify-between items-center mb-2">
+          <h2 className="text-xl font-bold">Time Slots</h2>
+          {!editingSlot && (
+            <button
+              onClick={() => setEditingSlot(true)}
+              className="text-purple-700 font-semibold"
+            >
+              Edit
+            </button>
+          )}
+        </div>
+        {editingSlot ? (
+          <div className="space-y-2">
+            <textarea
+              value={tempSlots}
+              onChange={(e) => setTempSlots(e.target.value)}
+              className="w-full p-2 border rounded text-black"
+              rows={4}
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={saveTimeSlots}
+                className="bg-green-500 px-4 py-2 rounded text-white"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setEditingSlot(false)}
+                className="bg-gray-400 px-4 py-2 rounded text-white"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <ul className="list-disc pl-6 space-y-1 text-gray-700">
+            {timeSlots.map((slot, idx) => (
+              <li key={idx}>{slot}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* Case Studies */}
+      <div className="space-y-6">
+        {caseStudies.map((pet, idx) => (
+          <div key={idx} className="bg-white p-6 rounded-xl shadow-md">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-xl font-bold">{pet.name} Case Study</h2>
+              {editingCase !== idx && (
+                <button
+                  onClick={() => handleCaseEdit(idx)}
+                  className="text-purple-700 font-semibold"
+                >
+                  Edit
+                </button>
               )}
             </div>
-          ))}
-        </div>
+
+            {editingCase === idx ? (
+              <div className="space-y-2 text-black">
+                <input
+                  type="text"
+                  value={tempCase.name}
+                  onChange={(e) => setTempCase({ ...tempCase, name: e.target.value })}
+                  placeholder="Pet Name"
+                  className="w-full p-2 border rounded"
+                />
+                <input
+                  type="text"
+                  value={tempCase.breed}
+                  onChange={(e) => setTempCase({ ...tempCase, breed: e.target.value })}
+                  placeholder="Breed"
+                  className="w-full p-2 border rounded"
+                />
+                <input
+                  type="text"
+                  value={tempCase.owner}
+                  onChange={(e) => setTempCase({ ...tempCase, owner: e.target.value })}
+                  placeholder="Owner"
+                  className="w-full p-2 border rounded"
+                />
+                <textarea
+                  value={tempCase.description}
+                  onChange={(e) =>
+                    setTempCase({ ...tempCase, description: e.target.value })
+                  }
+                  placeholder="Description"
+                  className="w-full p-2 border rounded"
+                  rows={3}
+                />
+                <input
+                  type="text"
+                  value={tempCase.image}
+                  placeholder="Image URL"
+                  onChange={(e) => setTempCase({ ...tempCase, image: e.target.value })}
+                  className="w-full p-2 border rounded"
+                />
+                <input type="file" accept="image/*" onChange={handleCaseImageUpload} />
+                <div className="flex gap-2 mt-2">
+                  <button
+                    onClick={() => saveCaseStudy(idx)}
+                    className="bg-green-500 px-4 py-2 rounded text-white"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={() => setEditingCase(null)}
+                    className="bg-gray-400 px-4 py-2 rounded text-white"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="md:flex gap-6">
+                <img
+                  src={pet.image || "https://via.placeholder.com/150"}
+                  alt={pet.name}
+                  className="w-32 h-32 rounded-full object-cover mb-2 md:mb-0"
+                />
+                <div>
+                  <p className="text-gray-700 mb-1">{pet.description}</p>
+                  <p className="text-gray-700">Breed: {pet.breed}</p>
+                  <p className="text-gray-700">Owner: {pet.owner}</p>
+                  <ul className="list-disc pl-6 text-gray-700 mt-2">
+                    <li>Medical History: {pet.medicalHistory.join(", ")}</li>
+                    <li>Feeding Schedule: {pet.feedingSchedule.join(", ")}</li>
+                    <li>Grooming Tips: {pet.groomingTips.join(", ")}</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default PetProfile;
+export default Veterinarian;

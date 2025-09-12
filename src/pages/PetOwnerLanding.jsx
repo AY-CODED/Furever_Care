@@ -1,20 +1,21 @@
 // src/pages/PetOwnerLanding.jsx
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { PaperPlane, X, MessageSquare } from "lucide-react";
 import petDog from "../assets/dog.jpg";
 import petCat from "../assets/pets-bg.jpg";
-
+import catlitter from "../assets/catlitter.jpg"
 const PetOwnerLanding = () => {
   const userName = localStorage.getItem("userName") || "Pet Lover";
 
-  // Products Data (add more pets easily)
+  // Products Data
   const products = [
     { name: "Dog Food", price: "₦5000", desc: "Nutritious dry food.", img: petDog, type: "Dog" },
     { name: "Dog Collar", price: "₦2500", desc: "Adjustable stylish collar.", img: petDog, type: "Dog" },
     { name: "Dog Shampoo", price: "₦3500", desc: "Gentle grooming shampoo.", img: petDog, type: "Dog" },
     { name: "Cat Toy", price: "₦2000", desc: "Fun toy for cats.", img: petCat, type: "Cat" },
     { name: "Cat Bed", price: "₦6500", desc: "Comfy resting space for cats.", img: petCat, type: "Cat" },
-    { name: "Cat Litter", price: "₦4000", desc: "Clumping litter with odor control.", img: petCat, type: "Cat" },
+    { name: "Cat Litter", price: "₦4000", desc: "Clumping litter with odor control.", img: catlitter, type: "Cat" },
     { name: "Bird Cage", price: "₦15000", desc: "Spacious cage for birds.", img: petDog, type: "Bird" },
     { name: "Bird Seeds", price: "₦3000", desc: "Nutritious seeds for all birds.", img: petCat, type: "Bird" },
     { name: "Fish Tank", price: "₦20000", desc: "Aquarium for fish lovers.", img: petDog, type: "Fish" },
@@ -27,8 +28,27 @@ const PetOwnerLanding = () => {
 
   const [category, setCategory] = useState("All");
 
+  // Chat states
+  const [chatOpen, setChatOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+
+  const sendMessage = () => {
+    if (!input.trim()) return;
+    setMessages([...messages, { text: input, fromUser: true }]);
+    setInput("");
+
+    // Simple automated response
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { text: "Thanks for your question! We'll get back to you soon 🐾", fromUser: false },
+      ]);
+    }, 1000);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-100 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-100 py-12 relative">
       {/* Welcome Header */}
       <div className="w-full max-w-6xl mt-16 sm:mt-32 px-2 sm:px-0 mx-auto">
         <header className="text-center mb-12">
@@ -93,6 +113,71 @@ const PetOwnerLanding = () => {
             ))}
         </div>
       </section>
+
+      {/* Chat Box */}
+      <div className="fixed bottom-5 right-5 z-50">
+        {/* Chat Button */}
+        {!chatOpen && (
+          <button
+            onClick={() => setChatOpen(true)}
+            className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg"
+          >
+            <MessageSquare className="w-6 h-6" />
+          </button>
+        )}
+
+        {/* Chat Window */}
+        <AnimatePresence>
+          {chatOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              className="w-80 h-96 bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden"
+            >
+              {/* Header */}
+              <div className="bg-purple-600 text-white flex justify-between items-center p-4">
+                <h4 className="font-semibold">Pet Chat</h4>
+                <button onClick={() => setChatOpen(false)}>
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Messages */}
+              <div className="flex-1 p-4 overflow-y-auto space-y-2">
+                {messages.map((msg, i) => (
+                  <div
+                    key={i}
+                    className={`p-2 rounded-lg text-sm ${
+                      msg.fromUser ? "bg-purple-100 self-end" : "bg-gray-100 self-start"
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                ))}
+              </div>
+
+              {/* Input */}
+              <div className="p-3 border-t border-gray-200 flex gap-2">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                  placeholder="Ask a question..."
+                  className="flex-1 border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                />
+                <button
+                  onClick={sendMessage}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl"
+                >
+                  <PaperPlane className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
