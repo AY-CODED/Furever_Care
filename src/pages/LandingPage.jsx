@@ -55,7 +55,7 @@ const LandingPage = () => {
                     >
                         <button
                             onClick={() => navigate("/signup")}
-                            className="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-3 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transition-transform w-full sm:w-auto"
+                            className="bg-gradient-to-r from-blue-500 to-pink-400 text-white px-8 py-3 rounded-full font-semibold text-lg shadow-lg hover:scale-105 transition-transform w-full sm:w-auto"
                         >
                             Get Started
                         </button>
