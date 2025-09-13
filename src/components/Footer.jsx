@@ -5,7 +5,7 @@ const Footer = () => {
             <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
                 {/* Brand */}
                 <div>
-                    <h2 className="text-2xl font-bold text-pink-500">FurEver Care</h2>
+                    <h2 className="text-2xl font-bold text-blue-500">FurEver Care</h2>
                     <p className="mt-2 text-gray-400 text-sm">
                         They Deserve Forever Love ❤️
                     </p>
@@ -15,9 +15,9 @@ const Footer = () => {
                 <div>
                     <h3 className="text-lg font-semibold text-white">Quick Links</h3>
                     <ul className="mt-3 space-y-2">
-                        <li className="hover:text-pink-400 cursor-pointer transition">PetOwner</li>
-                        <li className="hover:text-pink-400 cursor-pointer transition">Veterinarian</li>
-                        <li className="hover:text-pink-400 cursor-pointer transition">Animal Shelter</li>
+                        <li className="hover:text-blue-400 cursor-pointer transition">PetOwner</li>
+                        <li className="hover:text-blue-400 cursor-pointer transition">Veterinarian</li>
+                        <li className="hover:text-blue-400 cursor-pointer transition">Animal Shelter</li>
                     </ul>
                 </div>
 

@@ -1,304 +1,254 @@
-import React, { useState, useEffect } from "react";
+// src/components/VeterinarianPage.jsx
+import React, { useState } from "react";
 
-const Veterinarian = () => {
-  // Vet profile (could be fetched from backend; here using localStorage)
-  const [vet, setVet] = useState(() => {
-    return JSON.parse(localStorage.getItem("vet")) || {
-      name: "Dr. Jane Doe",
-      email: "vet@example.com",
-      profileImage: "",
-    };
+const VeterinarianPage = () => {
+  const [vet, setVet] = useState({
+    name: "",
+    specialization: "",
+    contact: "",
+    image: "",
   });
+  const [preview, setPreview] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
-  const [editingVet, setEditingVet] = useState(false);
-  const [tempVet, setTempVet] = useState(vet);
-
-  // Time slots (editable)
-  const [timeSlots, setTimeSlots] = useState([
-    "Mon 10:00 - 12:00",
-    "Tue 14:00 - 16:00",
-    "Fri 09:00 - 11:00",
-  ]);
-  const [editingSlot, setEditingSlot] = useState(false);
-  const [tempSlots, setTempSlots] = useState(timeSlots.join("\n"));
-
-  // Case studies / pets
-  const ownerName = localStorage.getItem("userName") || "Unknown Owner";
-  const [caseStudies, setCaseStudies] = useState([
-    {
-      name: "Buddy",
-      breed: "Golden Retriever",
-      owner: ownerName,
-      description: "Friendly and energetic, loves walks.",
-      image: "",
-      medicalHistory: ["Vaccinated for rabies", "Treated for ear infection"],
-      feedingSchedule: ["8:00 AM - Dry food", "1:00 PM - Wet food"],
-      groomingTips: ["Brush twice a week"],
-    },
-  ]);
-
-  const [editingCase, setEditingCase] = useState(null);
-  const [tempCase, setTempCase] = useState({});
-
-  // Vet edit handlers
-  const saveVetProfile = () => {
-    setVet(tempVet);
-    localStorage.setItem("vet", JSON.stringify(tempVet));
-    setEditingVet(false);
+  // Handle text inputs
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "imageURL") {
+      setPreview(value);
+      setVet((p) => ({ ...p, image: value }));
+    } else {
+      setVet((p) => ({ ...p, [name]: value }));
+    }
   };
 
-  // Time slot handlers
-  const saveTimeSlots = () => {
-    setTimeSlots(tempSlots.split("\n").filter((s) => s.trim() !== ""));
-    setEditingSlot(false);
+  // Handle file upload
+  const handleFileChange = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+        setVet((p) => ({ ...p, image: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  // Case study handlers
-  const handleCaseEdit = (index) => {
-    setEditingCase(index);
-    setTempCase({ ...caseStudies[index] });
+  // Submit form
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!vet.name || !vet.specialization || !vet.contact || !preview) {
+      alert("Please fill all fields and upload an image.");
+      return;
+    }
+    setSubmitted(true);
   };
 
-  const saveCaseStudy = (index) => {
-    const updated = [...caseStudies];
-    updated[index] = tempCase;
-    setCaseStudies(updated);
-    setEditingCase(null);
-  };
+  // --- Step 1: Registration Form ---
+  if (!submitted) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-900 to-blue-900 px-4 py-24">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg space-y-4 border border-gray-200"
+        >
+          <h2 className="text-3xl font-extrabold text-center text-blue-700">
+            Veterinarian Registration 🩺
+          </h2>
+          <p className="text-center text-gray-500 mb-4">
+            Fill in your details to create your professional profile
+          </p>
 
-  const handleCaseImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => setTempCase({ ...tempCase, image: reader.result });
-    reader.readAsDataURL(file);
-  };
+          {/* Name */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={vet.name}
+              onChange={handleChange}
+              placeholder="Dr. Jane Doe"
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
 
-  const handleVetImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => setVet({ ...vet, profileImage: reader.result });
-    reader.readAsDataURL(file);
-  };
+          {/* Specialization */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Specialization
+            </label>
+            <input
+              type="text"
+              name="specialization"
+              value={vet.specialization}
+              onChange={handleChange}
+              placeholder="Veterinary Surgeon"
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
+
+          {/* Contact */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Contact
+            </label>
+            <input
+              type="text"
+              name="contact"
+              value={vet.contact}
+              onChange={handleChange}
+              placeholder="+234 812 345 6789 or email@example.com"
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
+
+          {/* Image Upload */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Upload Image
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="w-full px-3 py-2 border rounded-lg bg-white text-gray-600"
+            />
+          </div>
+
+          {/* Or Image URL */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Or Image URL
+            </label>
+            <input
+              type="url"
+              name="imageURL"
+              onChange={handleChange}
+              placeholder="https://example.com/vet.jpg"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
+
+          {/* Live preview */}
+          {preview && (
+            <div className="mt-4 flex items-center gap-4 p-3 border rounded-lg bg-gray-50">
+              <img
+                src={preview}
+                alt="preview"
+                className="w-16 h-16 rounded-full object-cover border"
+              />
+              <p className="text-sm text-gray-600">
+                Preview of your profile picture
+              </p>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-500 text-white py-3 rounded-lg hover:opacity-90 transition font-semibold"
+          >
+            Submit & View Profile
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  // --- Step 2: Profile Page ---
+  const slots = [
+    { time: "09:00 AM", status: "Available" },
+    { time: "10:00 AM", status: "Booked" },
+    { time: "11:00 AM", status: "Available" },
+    { time: "01:00 PM", status: "Booked" },
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 md:p-12 space-y-8">
-      {/* Vet Profile */}
-      <div className="bg-purple-700 text-white p-6 rounded-xl shadow-md flex flex-col md:flex-row items-center gap-6 mt-10">
-        <div className="text-center md:text-left">
-          {editingVet ? (
-            <div className="space-y-2 text-black">
-              <input
-                type="text"
-                className="p-2 rounded w-full"
-                value={tempVet.name}
-                onChange={(e) => setTempVet({ ...tempVet, name: e.target.value })}
-                placeholder="Name"
-              />
-              <input
-                type="email"
-                className="p-2 rounded w-full"
-                value={tempVet.email}
-                onChange={(e) => setTempVet({ ...tempVet, email: e.target.value })}
-                placeholder="Email"
-              />
-              <div className="flex gap-2 mt-2 justify-center md:justify-start">
-                <button
-                  onClick={saveVetProfile}
-                  className="bg-green-500 px-4 py-2 rounded text-white"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={() => setEditingVet(false)}
-                  className="bg-gray-400 px-4 py-2 rounded text-white"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          ) : (
-            <>
-              <h2 className="text-2xl font-bold">{vet.name}</h2>
-              <p>{vet.email}</p>
-              <button
-                onClick={() => setEditingVet(true)}
-                className="mt-2 px-3 py-1 bg-white text-purple-700 rounded"
-              >
-                Edit Profile
-              </button>
-            </>
-          )}
+    <div className="min-h-screen bg-gray-50 p-6 pt-24 pb-24">
+      {/* Header */}
+      <header className="bg-gradient-to-r from-blue-700 to-indigo-600 text-white p-6 rounded-lg mb-8 shadow-md flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold">Dr. {vet.name}</h1>
+          <p className="text-sm opacity-90">{vet.specialization}</p>
         </div>
+        <button
+          onClick={() => setSubmitted(false)}
+          className="bg-white text-blue-700 px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition"
+        >
+          Edit Profile
+        </button>
+      </header>
 
-        {/* Vet Profile Image with Upload */}
-        <div className="w-32 h-32 rounded-full overflow-hidden bg-white shadow-md flex items-center justify-center cursor-pointer relative">
-          {vet.profileImage ? (
-            <img
-              src={vet.profileImage}
-              alt="Vet"
-              className="w-full h-full object-cover"
-              onClick={() => document.getElementById("vetImageInput").click()}
-            />
-          ) : (
-            <div
-              className="text-gray-400 text-2xl text-center flex items-center justify-center w-full h-full"
-              onClick={() => document.getElementById("vetImageInput").click()}
-            >
-              Select a Photo
-            </div>
-          )}
-          <input
-            type="file"
-            id="vetImageInput"
-            accept="image/*"
-            className="hidden"
-            onChange={handleVetImageUpload}
+      {/* Profile Info + Appointments */}
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Profile */}
+        <div className="bg-white p-6 rounded-2xl shadow-lg text-center">
+          <img
+            src={vet.image}
+            alt="Vet"
+            className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-blue-100"
           />
+          <h2 className="text-2xl font-bold text-gray-800">{vet.name}</h2>
+          <p className="text-gray-600">{vet.specialization}</p>
+          <p className="mt-2 text-gray-700">{vet.contact}</p>
         </div>
-      </div>
 
-      {/* Time Slots */}
-      <div className="bg-white p-6 rounded-xl shadow-md">
-        <div className="flex justify-between items-center mb-2">
-          <h2 className="text-xl font-bold">Time Slots</h2>
-          {!editingSlot && (
-            <button
-              onClick={() => setEditingSlot(true)}
-              className="text-purple-700 font-semibold"
-            >
-              Edit
-            </button>
-          )}
-        </div>
-        {editingSlot ? (
-          <div className="space-y-2">
-            <textarea
-              value={tempSlots}
-              onChange={(e) => setTempSlots(e.target.value)}
-              className="w-full p-2 border rounded text-black"
-              rows={4}
-            />
-            <div className="flex gap-2">
-              <button
-                onClick={saveTimeSlots}
-                className="bg-green-500 px-4 py-2 rounded text-white"
+        {/* Appointments */}
+        <div className="bg-white p-6 rounded-2xl shadow-lg">
+          <h2 className="text-xl font-bold mb-4 text-blue-700">
+            Appointment Slots
+          </h2>
+          <ul className="space-y-3">
+            {slots.map((s) => (
+              <li
+                key={s.time}
+                className={`p-3 rounded-lg flex justify-between items-center ${
+                  s.status === "Available"
+                    ? "bg-green-50 text-green-700 border border-green-200"
+                    : "bg-red-50 text-red-700 border border-red-200"
+                }`}
               >
-                Save
-              </button>
-              <button
-                onClick={() => setEditingSlot(false)}
-                className="bg-gray-400 px-4 py-2 rounded text-white"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        ) : (
-          <ul className="list-disc pl-6 space-y-1 text-gray-700">
-            {timeSlots.map((slot, idx) => (
-              <li key={idx}>{slot}</li>
+                <span className="font-medium">{s.time}</span>
+                <span className="text-sm">{s.status}</span>
+              </li>
             ))}
           </ul>
-        )}
+        </div>
       </div>
 
       {/* Case Studies */}
-      <div className="space-y-6">
-        {caseStudies.map((pet, idx) => (
-          <div key={idx} className="bg-white p-6 rounded-xl shadow-md">
-            <div className="flex justify-between items-center mb-2">
-              <h2 className="text-xl font-bold">{pet.name} Case Study</h2>
-              {editingCase !== idx && (
-                <button
-                  onClick={() => handleCaseEdit(idx)}
-                  className="text-purple-700 font-semibold"
-                >
-                  Edit
-                </button>
-              )}
-            </div>
-
-            {editingCase === idx ? (
-              <div className="space-y-2 text-black">
-                <input
-                  type="text"
-                  value={tempCase.name}
-                  onChange={(e) => setTempCase({ ...tempCase, name: e.target.value })}
-                  placeholder="Pet Name"
-                  className="w-full p-2 border rounded"
-                />
-                <input
-                  type="text"
-                  value={tempCase.breed}
-                  onChange={(e) => setTempCase({ ...tempCase, breed: e.target.value })}
-                  placeholder="Breed"
-                  className="w-full p-2 border rounded"
-                />
-                <input
-                  type="text"
-                  value={tempCase.owner}
-                  onChange={(e) => setTempCase({ ...tempCase, owner: e.target.value })}
-                  placeholder="Owner"
-                  className="w-full p-2 border rounded"
-                />
-                <textarea
-                  value={tempCase.description}
-                  onChange={(e) =>
-                    setTempCase({ ...tempCase, description: e.target.value })
-                  }
-                  placeholder="Description"
-                  className="w-full p-2 border rounded"
-                  rows={3}
-                />
-                <input
-                  type="text"
-                  value={tempCase.image}
-                  placeholder="Image URL"
-                  onChange={(e) => setTempCase({ ...tempCase, image: e.target.value })}
-                  className="w-full p-2 border rounded"
-                />
-                <input type="file" accept="image/*" onChange={handleCaseImageUpload} />
-                <div className="flex gap-2 mt-2">
-                  <button
-                    onClick={() => saveCaseStudy(idx)}
-                    className="bg-green-500 px-4 py-2 rounded text-white"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={() => setEditingCase(null)}
-                    className="bg-gray-400 px-4 py-2 rounded text-white"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="md:flex gap-6">
-                <img
-                  src={pet.image || "https://via.placeholder.com/150"}
-                  alt={pet.name}
-                  className="w-32 h-32 rounded-full object-cover mb-2 md:mb-0"
-                />
-                <div>
-                  <p className="text-gray-700 mb-1">{pet.description}</p>
-                  <p className="text-gray-700">Breed: {pet.breed}</p>
-                  <p className="text-gray-700">Owner: {pet.owner}</p>
-                  <ul className="list-disc pl-6 text-gray-700 mt-2">
-                    <li>Medical History: {pet.medicalHistory.join(", ")}</li>
-                    <li>Feeding Schedule: {pet.feedingSchedule.join(", ")}</li>
-                    <li>Grooming Tips: {pet.groomingTips.join(", ")}</li>
-                  </ul>
-                </div>
-              </div>
-            )}
+      <div className="bg-white p-6 rounded-2xl shadow-lg mt-8">
+        <h2 className="text-xl font-bold mb-4 text-blue-700">
+          Sample Pet Medical Histories
+        </h2>
+        <div className="space-y-4 text-gray-700">
+          <div>
+            <h3 className="font-semibold">🐶 Max — Golden Retriever</h3>
+            <p className="text-sm">
+              Chronic ear infection • Treated with antibiotics and ear cleaning.
+            </p>
           </div>
-        ))}
+          <div>
+            <h3 className="font-semibold">🐱 Bella — Persian Cat</h3>
+            <p className="text-sm">
+              Dental tartar and gingivitis • Treated with scaling and antibiotics.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-semibold">🐇 Snowy — Rabbit</h3>
+            <p className="text-sm">
+              Mites infestation • Treated with topical medicine and follow-up.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Veterinarian;
+export default VeterinarianPage;

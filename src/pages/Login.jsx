@@ -64,12 +64,12 @@ const Login = ({ state, dispatch }) => {
                             Username
                         </label>
                         <div className="relative">
-                            <User className="absolute left-3 top-3 w-5 h-5 text-pink-400" />
+                            <User className="absolute left-3 top-3 w-5 h-5 text-blue-400" />
                             <input
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                className="w-full pl-10 px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+                                className="w-full pl-10 px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                                 placeholder="Enter your username"
                                 required
                             />
@@ -87,7 +87,7 @@ const Login = ({ state, dispatch }) => {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full pl-10 px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
+                                className="w-full pl-10 px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                                 placeholder="••••••••"
                                 required
                             />
@@ -102,7 +102,7 @@ const Login = ({ state, dispatch }) => {
                         }}
                         whileTap={{ scale: 0.95 }}
                         type="submit"
-                        className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-xl font-semibold text-lg shadow-lg transition-transform"
+                        className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-xl font-semibold text-lg shadow-lg transition-transform"
                     >
                         Login
                     </motion.button>
@@ -113,7 +113,7 @@ const Login = ({ state, dispatch }) => {
                     Don’t have an account?{" "}
                     <span
                         onClick={() => navigate("/signup")}
-                        className="text-pink-400 cursor-pointer hover:underline"
+                        className="text-blue-400 cursor-pointer hover:underline"
                     >
                         Sign Up
                     </span>

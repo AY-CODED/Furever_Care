@@ -10,7 +10,7 @@ const SignUp = ({ dispatch }) => {
     const [password, setPassword] = useState("");
     const [userType, setUserType] = useState("");
     const navigate = useNavigate();
-        
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -91,7 +91,7 @@ const SignUp = ({ dispatch }) => {
                             type="text"
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+                            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                             placeholder="John"
                             required
                         />
@@ -106,7 +106,7 @@ const SignUp = ({ dispatch }) => {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 transition"
+                            className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
                             placeholder="Enter a password"
                             required
                         />
@@ -124,8 +124,8 @@ const SignUp = ({ dispatch }) => {
                                     onClick={() => setUserType(option.value)}
                                     className={`cursor-pointer p-3 rounded-xl border flex flex-col items-center justify-center text-center transition transform hover:-translate-y-1 ${
                                         userType === option.value
-                                            ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg scale-105 border-transparent"
-                                            : "bg-white/10 text-gray-200 border-white/20 hover:border-pink-400"
+                                            ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg scale-105 border-transparent"
+                                            : "bg-white/10 text-gray-200 border-white/20 hover:border-blue-400"
                                     }`}
                                 >
                                     <div className="flex items-center justify-center mb-2">
@@ -147,7 +147,7 @@ const SignUp = ({ dispatch }) => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         type="submit"
-                        className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 rounded-xl font-semibold text-lg shadow-lg transition-transform"
+                        className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-xl font-semibold text-lg shadow-lg transition-transform"
                     >
                         Sign Up
                     </motion.button>
@@ -157,7 +157,7 @@ const SignUp = ({ dispatch }) => {
                     Already have an account?{" "}
                     <span
                         onClick={() => navigate("/login")}
-                        className="text-pink-400 cursor-pointer hover:underline"
+                        className="text-blue-400 cursor-pointer hover:underline"
                     >
                         Login
                     </span>

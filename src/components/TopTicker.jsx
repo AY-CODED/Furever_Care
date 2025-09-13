@@ -18,8 +18,8 @@ const TopTicker = () => {
     ];
 
     return (
-        <div className="w-full bg-pink-100 border-b border-pink-300 overflow-hidden mt-7">
-            <div className="whitespace-nowrap animate-marquee py-2 px-4 flex items-center gap-8 text-sm sm:text-base text-pink-700 font-medium">
+        <div className="w-full bg-pink-100 border-b border-blue-300 overflow-hidden mt-7">
+            <div className="whitespace-nowrap animate-marquee py-2 px-4 flex items-center gap-8 text-sm sm:text-base text-blue-700 font-medium">
                 <span>📍 {location}</span>
                 <span>🕒 {time.toLocaleTimeString()}</span>
                 {updates.map((u, i) => (

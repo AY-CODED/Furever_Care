@@ -1,3 +1,4 @@
+// src/pages/PetProfile.jsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +12,8 @@ const PetProfile = () => {
     name: "Buddy",
     breed: "Golden Retriever",
     owner: ownerName,
-    description: "Buddy is a friendly and energetic pet who loves walks and cuddles.",
+    description:
+      "Buddy is a friendly and energetic pet who loves walks and cuddles.",
     image: defaultPet,
     medicalHistory: [
       "🐶 Vaccinated for rabies",
@@ -34,13 +36,19 @@ const PetProfile = () => {
   const [tempValue, setTempValue] = useState("");
   const [tempImage, setTempImage] = useState("");
 
-  // Start editing a field
+  // Start editing
   const handleEdit = (field) => {
     setEditingField(field);
     if (field === "image") {
       setTempImage(pet.image);
+    } else if (field === "basic") {
+      setTempValue({
+        name: pet.name,
+        breed: pet.breed,
+        owner: pet.owner,
+      });
     } else {
-      setTempValue(pet[field].join ? pet[field].join("\n") : pet[field]);
+      setTempValue(pet[field].join("\n"));
     }
   };
 
@@ -54,7 +62,9 @@ const PetProfile = () => {
         name: tempValue.name || pet.name,
         breed: tempValue.breed || pet.breed,
         owner: tempValue.owner || pet.owner,
-        description: `${tempValue.name || pet.name} is a friendly and energetic pet who loves walks and cuddles.`,
+        description: `${
+          tempValue.name || pet.name
+        } is a friendly and energetic pet who loves walks and cuddles.`,
       });
     } else {
       setPet({
@@ -65,7 +75,7 @@ const PetProfile = () => {
     setEditingField(null);
   };
 
-  // Upload image from device
+  // Upload image
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -85,7 +95,7 @@ const PetProfile = () => {
       </button>
 
       {/* Header */}
-      <header className="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-6 rounded-lg shadow-md mb-8 text-center">
+      <header className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-lg shadow-md mb-8 text-center">
         {editingField === "basic" ? (
           <div className="space-y-2">
             <input
@@ -118,7 +128,7 @@ const PetProfile = () => {
             <div className="flex gap-2 justify-center">
               <button
                 onClick={() => handleSave("basic")}
-                className="bg-green-500 px-4 py-2 rounded text-white"
+                className="bg-gradient-to-r from-blue-600 to-indigo-700 px-4 py-2 rounded text-white shadow hover:opacity-90 transition"
               >
                 Save
               </button>
@@ -138,7 +148,7 @@ const PetProfile = () => {
             </p>
             <button
               onClick={() => handleEdit("basic")}
-              className="mt-4 px-3 py-1 bg-white text-purple-600 rounded shadow"
+              className="mt-4 px-3 py-1 bg-white text-blue-700 rounded shadow"
             >
               Edit Info
             </button>
@@ -174,7 +184,7 @@ const PetProfile = () => {
               <div className="flex gap-2 justify-center mt-2">
                 <button
                   onClick={() => handleSave("image")}
-                  className="bg-green-500 px-4 py-2 rounded text-white"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-700 px-4 py-2 rounded text-white shadow hover:opacity-90 transition"
                 >
                   Save
                 </button>
@@ -191,7 +201,7 @@ const PetProfile = () => {
               <p className="text-gray-600 mt-2">{pet.description}</p>
               <button
                 onClick={() => handleEdit("image")}
-                className="mt-4 px-3 py-1 bg-white text-purple-600 rounded shadow"
+                className="mt-4 px-3 py-1 bg-white text-blue-700 rounded shadow"
               >
                 Change Image
               </button>
@@ -211,11 +221,13 @@ const PetProfile = () => {
               className="bg-white p-6 rounded-lg shadow-md"
             >
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">{field.replace(/([A-Z])/g, " $1")}</h2>
+                <h2 className="text-xl font-bold">
+                  {field.replace(/([A-Z])/g, " $1")}
+                </h2>
                 {editingField !== field && (
                   <button
                     onClick={() => handleEdit(field)}
-                    className="text-purple-600 font-semibold hover:underline"
+                    className="text-blue-700 font-semibold hover:underline"
                   >
                     Edit
                   </button>
@@ -233,7 +245,7 @@ const PetProfile = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleSave(field)}
-                      className="bg-green-500 px-4 py-2 rounded text-white"
+                      className="bg-gradient-to-r from-blue-600 to-indigo-700 px-4 py-2 rounded text-white shadow hover:opacity-90 transition"
                     >
                       Save
                     </button>
