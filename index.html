@@ -1,13 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="data:image/png;base64,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"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>FurEver Care</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.jsx"></script>
+    </body>
 </html>

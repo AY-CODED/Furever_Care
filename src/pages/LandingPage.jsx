@@ -59,12 +59,12 @@ const LandingPage = () => {
                         >
                             Get Started
                         </button>
-                        <button
+                        {/* <button
                             onClick={() => navigate("/about")}
                             className="bg-white text-gray-800 px-8 py-3 rounded-full font-semibold text-lg shadow hover:scale-105 transition-transform w-full sm:w-auto"
                         >
                             Learn More
-                        </button>
+                        </button> */}
                     </motion.div>
                 </motion.div>
             </div>

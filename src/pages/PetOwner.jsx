@@ -223,171 +223,178 @@ const PetOwner = () => {
             </div>
 
             {/* About Us */}
-<section
-    id="about"
-    className="max-w-6xl w-full py-20 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl shadow-lg"
->
-    <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-center"
-    >
-        <h2 className="text-4xl font-extrabold mb-8 bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
-            About Us
-        </h2>
-        <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed mb-12">
-            We are dedicated to creating a safe and loving
-            environment for all pets. Our mission is to connect
-            families with furry friends and provide tools to care
-            for them.
-        </p>
-    </motion.div>
-
-    {/* Icons Row */}
-    <div className="grid sm:grid-cols-3 gap-8 mt-10">
-        <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
-        >
-            <div className="flex justify-center mb-4">
-                <PawPrint className="w-12 h-12 text-blue-500" />
-            </div>
-            <h3 className="font-bold text-lg mb-2">Pet Love</h3>
-            <p className="text-gray-500">
-                Caring for pets with passion and devotion.
-            </p>
-        </motion.div>
-
-        <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
-        >
-            <div className="flex justify-center mb-4">
-                <Heart className="w-12 h-12 text-indigo-500" />
-            </div>
-            <h3 className="font-bold text-lg mb-2">
-                Forever Homes
-            </h3>
-            <p className="text-gray-500">
-                Helping pets find safe, loving families.
-            </p>
-        </motion.div>
-
-        <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
-        >
-            <div className="flex justify-center mb-4">
-                <Home className="w-12 h-12 text-blue-600" />
-            </div>
-            <h3 className="font-bold text-lg mb-2">Community</h3>
-            <p className="text-gray-500">
-                Building a network of pet lovers worldwide.
-            </p>
-        </motion.div>
-    </div>
-</section>
-
-{/* Pet Care */}
-<section id="care" className="max-w-6xl w-full py-20">
-    <motion.h2
-        initial={{ opacity: 0, y: -30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent"
-    >
-        Pet Care Sections
-    </motion.h2>
-
-    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-        <Link to="/petcare" className="hover:text-blue-500 transition-colors">
-            <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+            <section
+                id="about"
+                className="max-w-6xl w-full py-20 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl shadow-lg"
             >
-                <PawPrint className="w-12 h-12 text-blue-500 mb-4" />
-                <h3 className="font-semibold text-lg mb-2">
-                    Pet Profile
-                </h3>
-                <p className="text-gray-600 text-sm">
-                    Manage and update your pet’s profile.
-                </p>
-            </motion.div>
-        </Link>
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="text-center"
+                >
+                    <h2 className="text-4xl font-extrabold mb-8 bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent">
+                        About Us
+                    </h2>
+                    <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed mb-12">
+                        We are dedicated to creating a safe and loving
+                        environment for all pets. Our mission is to connect
+                        families with furry friends and provide tools to care
+                        for them.
+                    </p>
+                </motion.div>
 
-        <Link to="/feeding-guide">
-            <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center cursor-pointer"
-            >
-                <UtensilsCrossed className="w-12 h-12 text-indigo-500 mb-4" />
-                <h3 className="font-semibold text-lg mb-2">
-                    Feeding Guide
-                </h3>
-                <p className="text-gray-600 text-sm">
-                    Nutrition and feeding schedules.
-                </p>
-            </motion.div>
-        </Link>
+                {/* Icons Row */}
+                <div className="grid sm:grid-cols-3 gap-8 mt-10">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        viewport={{ once: true }}
+                        className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
+                    >
+                        <div className="flex justify-center mb-4">
+                            <PawPrint className="w-12 h-12 text-blue-500" />
+                        </div>
+                        <h3 className="font-bold text-lg mb-2">Pet Love</h3>
+                        <p className="text-gray-500">
+                            Caring for pets with passion and devotion.
+                        </p>
+                    </motion.div>
 
-        <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
-        >
-            <Link to="/health-tips" className="flex flex-col items-center">
-                <HeartPulse className="w-12 h-12 text-red-500 mb-4" />
-                <h3 className="font-semibold text-lg mb-2">
-                    Health Tips
-                </h3>
-                <p className="text-gray-600 text-sm">
-                    Keep your pets healthy and active.
-                </p>
-            </Link>
-        </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        viewport={{ once: true }}
+                        className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
+                    >
+                        <div className="flex justify-center mb-4">
+                            <Heart className="w-12 h-12 text-indigo-500" />
+                        </div>
+                        <h3 className="font-bold text-lg mb-2">
+                            Forever Homes
+                        </h3>
+                        <p className="text-gray-500">
+                            Helping pets find safe, loving families.
+                        </p>
+                    </motion.div>
 
-        <Link to="/grooming">
-            <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
-            >
-                <Scissors className="w-12 h-12 text-blue-400 mb-4" />
-                <h3 className="font-semibold text-lg mb-2">
-                    Grooming Videos
-                </h3>
-                <p className="text-gray-600 text-sm">
-                    Step-by-step guides to keep pets clean and stylish.
-                </p>
-            </motion.div>
-        </Link>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        viewport={{ once: true }}
+                        className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
+                    >
+                        <div className="flex justify-center mb-4">
+                            <Home className="w-12 h-12 text-blue-600" />
+                        </div>
+                        <h3 className="font-bold text-lg mb-2">Community</h3>
+                        <p className="text-gray-500">
+                            Building a network of pet lovers worldwide.
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
 
-        <Link to="/training">
-            <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
-            >
-                <Dumbbell className="w-12 h-12 text-green-500 mb-4" />
-                <h3 className="font-semibold text-lg mb-2">
-                    Training Tips
-                </h3>
-                <p className="text-gray-600 text-sm">
-                    Train your pets with effective techniques.
-                </p>
-            </motion.div>
-        </Link>
-    </div>
-</section>
+            {/* Pet Care */}
+            <section id="care" className="max-w-6xl w-full py-20">
+                <motion.h2
+                    initial={{ opacity: 0, y: -30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="text-4xl font-extrabold mb-12 text-center bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent"
+                >
+                    Pet Care Sections
+                </motion.h2>
+
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+                    <Link
+                        to="/petcare"
+                        className="hover:text-blue-500 transition-colors"
+                    >
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                        >
+                            <PawPrint className="w-12 h-12 text-blue-500 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Pet Profile
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Manage and update your pet’s profile.
+                            </p>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/feeding-guide">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center cursor-pointer"
+                        >
+                            <UtensilsCrossed className="w-12 h-12 text-indigo-500 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Feeding Guide
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Nutrition and feeding schedules.
+                            </p>
+                        </motion.div>
+                    </Link>
+
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                    >
+                        <Link
+                            to="/health-tips"
+                            className="flex flex-col items-center"
+                        >
+                            <HeartPulse className="w-12 h-12 text-red-500 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Health Tips
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Keep your pets healthy and active.
+                            </p>
+                        </Link>
+                    </motion.div>
+
+                    <Link to="/grooming">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                        >
+                            <Scissors className="w-12 h-12 text-blue-400 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Grooming Videos
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Step-by-step guides to keep pets clean and
+                                stylish.
+                            </p>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/training">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center"
+                        >
+                            <Dumbbell className="w-12 h-12 text-green-500 mb-4" />
+                            <h3 className="font-semibold text-lg mb-2">
+                                Training Tips
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                Train your pets with effective techniques.
+                            </p>
+                        </motion.div>
+                    </Link>
+                </div>
+            </section>
 
             {/* --- All other sections remain the same, just replace classes:
                   from-pink-500 → from-blue-600
